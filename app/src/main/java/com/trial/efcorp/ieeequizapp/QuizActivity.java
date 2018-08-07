@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
@@ -21,7 +22,7 @@ public class QuizActivity extends AppCompatActivity {
     private TextView mQuestion;
     private Button mChoice1,mChoice2,mChoice3,mChoice4;
 
-    Integer Score,i;
+    int Score,i;
 
     String[] questions,choice1,choice2,choice3,choice4,answer;
     String filename1, filename2, filename3, filename4,filename5,filename6;
@@ -74,8 +75,11 @@ public class QuizActivity extends AppCompatActivity {
         if(i>1){
 
             Intent resultIntent = new Intent(getApplicationContext(),ResultActivity.class);
+            resultIntent.putExtra("time",timeVal.getText().toString());
+            resultIntent.putExtra("score",Score);
             startActivity(resultIntent);
-        }
+            finish();
+        }else {
 
             mQuestion.setText(questions[i]);
             mChoice1.setText(choice1[i]);
@@ -87,10 +91,10 @@ public class QuizActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                   if(mChoice1.getText()==answer[i]) {
-                       Score += 1;
-                   }
-                    i+=1;
+                    if (mChoice1.getText().toString().equals(answer[i])) {
+                        Score+=1;
+                    }
+                    i += 1;
                     updatequiz();
                 }
             });
@@ -100,11 +104,12 @@ public class QuizActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    if(mChoice2.getText()==answer[i]) {
-                        Score += 1;
+
+                    if (mChoice2.getText().toString().equals(answer[i])) {
+                        Score+=1;
                     }
 
-                    i+=1;
+                    i += 1;
                     updatequiz();
 
                 }
@@ -114,11 +119,11 @@ public class QuizActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    if(mChoice3.getText()==answer[i]) {
-                        Score += 1;
+                    if (mChoice3.getText().toString().equals(answer[i])) {
+                        Score+=1;
 
                     }
-                    i+=1;
+                    i += 1;
                     updatequiz();
 
                 }
@@ -128,17 +133,18 @@ public class QuizActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    if(mChoice4.getText()==answer[i]) {
-                        Score += 1;
+                    if (mChoice4.getText().toString().equals(answer[i])) {
+                        Score+=1;
 
                     }
 
-                    i+=1;
+                    i += 1;
                     updatequiz();
                 }
             });
 
 
+        }
     }
 
     private void loadfromfile() {

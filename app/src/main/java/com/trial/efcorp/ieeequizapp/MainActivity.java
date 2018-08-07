@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,13 +17,14 @@ public class MainActivity extends AppCompatActivity {
 
     String[] questions,choice1,choice2,choice3,choice4,answer;
     String filename1, filename2, filename3, filename4,filename5,filename6;
+    Button quizBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        quizBtn = findViewById(R.id.quizBtn);
 
         questions  = new String[] { "First man on moon?",
                 "First man on space?" };
@@ -50,8 +53,17 @@ public class MainActivity extends AppCompatActivity {
 
         saveToFile();
 
-        Intent intent = new Intent(getApplicationContext(),QuizActivity.class);
-        startActivity(intent);
+        quizBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getApplicationContext(),QuizActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+
     }
 
     private void saveToFile() {
