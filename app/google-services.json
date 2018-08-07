@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "754997071353",
+    "firebase_url": "https://ieee-quiz-app-2.firebaseio.com",
+    "project_id": "ieee-quiz-app-2",
+    "storage_bucket": "ieee-quiz-app-2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754997071353:android:3bba80c95fbbb93a",
+        "android_client_info": {
+          "package_name": "com.trial.efcorp.ieeequizapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "754997071353-jr8954treqa1l608eft87diil96a75n8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trial.efcorp.ieeequizapp",
+            "certificate_hash": "8a9a764d5ee5204fd1c5aadad5e824f9462e5ff6"
+          }
+        },
+        {
+          "client_id": "754997071353-02rbidf4gcqeaj740r4skbvv18v8n38u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD921yjUcgJDhUnKnQP_pYTcLfGX5yWSb4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "754997071353-02rbidf4gcqeaj740r4skbvv18v8n38u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
