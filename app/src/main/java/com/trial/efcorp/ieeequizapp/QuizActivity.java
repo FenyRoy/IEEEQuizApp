@@ -1,5 +1,6 @@
 package com.trial.efcorp.ieeequizapp;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -51,7 +52,7 @@ public class QuizActivity extends AppCompatActivity {
         timeVal = findViewById(R.id.projtime);
         customHandler.postDelayed(updateTimeThread,0);
 
-        i=0;
+                i=0;
         updatequiz();
 
     }
@@ -145,6 +146,40 @@ public class QuizActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        final Dialog dialog= new Dialog(QuizActivity.this);
+        dialog.setContentView(R.layout.alert_layout);
+        TextView title = dialog.findViewById(R.id.title);
+        TextView message = dialog.findViewById(R.id.message);
+        Button okBtn = dialog.findViewById(R.id.yes);
+        Button noBtn = dialog.findViewById(R.id.no);
+
+        title.setText("Warning");
+        message.setText("Do you want to quit? \r\n" +
+                "All your progress will be lost! ");
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                dialog.dismiss();
+            }
+        });
+
+        noBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onResume();
+                dialog.dismiss();
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.show();
+
     }
 
     private void loadfromfile() {

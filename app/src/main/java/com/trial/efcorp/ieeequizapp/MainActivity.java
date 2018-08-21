@@ -2,22 +2,27 @@ package com.trial.efcorp.ieeequizapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
     String[] questions,choice1,choice2,choice3,choice4,answer;
     String filename1, filename2, filename3, filename4,filename5,filename6;
     Button quizBtn;
+    Handler quizHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +58,30 @@ public class MainActivity extends AppCompatActivity {
 
         saveToFile();
 
+        quizHandler.postDelayed(updateTimeThread,0);
+
         quizBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Calendar cal = Calendar.getInstance();
+
+                int dayofyear = cal.get(Calendar.DAY_OF_YEAR);
+                int year = cal.get(Calendar.YEAR);
+                int dayofweek = cal.get(Calendar.DAY_OF_WEEK);
+                int dayofmonth = cal.get(Calendar.DAY_OF_MONTH);
+                int month = cal.get(Calendar.MONTH);
+                int hour = cal.get(Calendar.HOUR_OF_DAY);
+                int min = cal.get(Calendar.MINUTE);
+
+                /*if (hour==21&&min>=0&&min<=2)
+                {
+                    Intent intent = new Intent(getApplicationContext(),QuizActivity.class);
+                    startActivity(intent);
+                }else {
+
+                    Toast.makeText(MainActivity.this, "Quiz will begin in "+ (21-hour) + "hour" + (60-min) + "mins", Toast.LENGTH_LONG).show();
+                }*/
 
                 Intent intent = new Intent(getApplicationContext(),QuizActivity.class);
                 startActivity(intent);
@@ -65,6 +91,31 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    Runnable updateTimeThread = new Runnable() {
+        @Override
+        public void run() {
+            Calendar cal = Calendar.getInstance();
+
+            int dayofyear = cal.get(Calendar.DAY_OF_YEAR);
+            int year = cal.get(Calendar.YEAR);
+            int dayofweek = cal.get(Calendar.DAY_OF_WEEK);
+            int dayofmonth = cal.get(Calendar.DAY_OF_MONTH);
+            int month = cal.get(Calendar.MONTH);
+            int hour = cal.get(Calendar.HOUR_OF_DAY);
+            int min = cal.get(Calendar.MINUTE);
+            int sec = cal.get(Calendar.SECOND);
+
+            if(hour==21&&min==38&&sec==0){
+
+                Intent intent = new Intent(getApplicationContext(),QuizActivity.class);
+                startActivity(intent);
+
+            }
+
+            quizHandler.postDelayed(this,0);
+        }
+    };
 
     private void saveToFile() {
         FileOutputStream fos1;
