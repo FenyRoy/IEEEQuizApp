@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/common_google_signin_btn_icon_dark"
+        android:src="@drawable/iqa"
         android:layout_centerHorizontal="true"
         android:id="@+id/signUpLogo"/>
 
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:textCursorDrawable="@color/white"
             android:inputType="textPersonName"
-            android:textColor="@color/white"
+            android:textColor="#000000"
             android:hint="Name" />
     </android.support.design.widget.TextInputLayout>
 
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:textCursorDrawable="@color/white"
             android:inputType="textEmailAddress"
-            android:textColor="@color/white"
+            android:textColor="#000000"
             android:hint="Email" />
     </android.support.design.widget.TextInputLayout>
 
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:textCursorDrawable="@color/white"
             android:inputType="textPassword"
-            android:textColor="@color/white"
+            android:textColor="#000000"
             android:hint="Password" />
     </android.support.design.widget.TextInputLayout>
 

@@ -74,6 +74,8 @@ public class SetupActivity extends AppCompatActivity {
 
             mDatabaseUsers.child(user_id).child("name").setValue(name);
             mDatabaseUsers.child(user_id).child("guild").setValue(guildNum);
+            mDatabaseUsers.child(user_id).child("score").setValue("0");
+            mDatabaseUsers.child(user_id).child("time").setValue("0");
             mProgress.dismiss();
             Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
             mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

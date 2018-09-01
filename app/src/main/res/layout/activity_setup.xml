@@ -15,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+        app:srcCompat="@drawable/iqa" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
