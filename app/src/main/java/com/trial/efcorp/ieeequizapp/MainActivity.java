@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,10 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,7 +36,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends YouTubeBaseActivity{
 
     String[] questions,choice1,choice2,choice3,choice4,answer;
     String filename1, filename2, filename3, filename4,filename5,filename6;
@@ -39,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     ImageButton menuBtn;
     Handler quizHandler = new Handler();
     TextView timeredt,usrname;
+    YouTubePlayerView youTubePlayerView;
+    YouTubePlayer.OnInitializedListener onInitializedListener;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -74,19 +81,7 @@ public class MainActivity extends AppCompatActivity {
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseUsers.keepSynced(true);
 
-        final String user_id = mAuth.getCurrentUser().getUid();
 
-        mDatabaseUsers.child(user_id).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String name = dataSnapshot.getValue(String.class);
-                usrname.setText(name);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-
-        });
 
         quizBtn = findViewById(R.id.quizBtn);
         menuBtn = findViewById(R.id.menu_btn);
@@ -118,7 +113,28 @@ public class MainActivity extends AppCompatActivity {
 
         saveToFile();
 
-        quizHandler.postDelayed(updateTimeThread,0);
+
+        try {
+            if(Settings.Global.getInt(getContentResolver(), Settings.Global.AUTO_TIME) == 1)
+            {
+                quizHandler.postDelayed(updateTimeThread,0);
+
+                youtubeplayer();
+            }
+            else
+            {
+                Toast.makeText(this, "Make Your Network Time Automatic", Toast.LENGTH_LONG).show();
+                for (int i=0;i<100000;i++);
+                finish();
+                // Disabed
+            }
+        } catch (Settings.SettingNotFoundException e) {
+            Toast.makeText(this, "Check Your Time Settings Is Automatic Or Not", Toast.LENGTH_LONG).show();
+            finish();
+        }
+
+
+
 
         quizBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,6 +181,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void youtubeplayer() {
+
+        youTubePlayerView = findViewById(R.id.youtubeview);
+        onInitializedListener = new YouTubePlayer.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+
+                youTubePlayer.loadVideo("J78SdCzzumA");
+
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+                Toast.makeText(MainActivity.this, "Restart App", Toast.LENGTH_SHORT).show();
+
+            }
+        };
+
+        youTubePlayerView.initialize(PlayerConfig.API_KEY,onInitializedListener);
 
     }
 
@@ -221,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
+
             }
 
             @Override
@@ -245,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
             int min = cal.get(Calendar.MINUTE);
             int sec = cal.get(Calendar.SECOND);
 
-            if(hour==21&&min==0&&sec==0){
+            if(hour==20&&min==0&&sec==0){
 
                 Intent intent = new Intent(getApplicationContext(),QuizActivity.class);
                 startActivity(intent);
@@ -255,22 +295,22 @@ public class MainActivity extends AppCompatActivity {
             {
 
                 if(hour<20) {
-                    String timer = (19 - hour) + " hour " + (59 - min) + " min " + (59 - sec) + " sec";
+                    String timer = (20 - hour) + ": " + (59 - min) + ": " + (59 - sec) ;
                     timeredt.setText(timer);
                 }
                 else {
 
-                    String timer = ( hour-19+24 ) + " hour " + (min - 59) + " min " + (sec - 59) + " sec";
+                    String timer = ( 23-(hour-20) ) + ": " + (-(min - 59)) + ": " + (-(sec - 59));
                     timeredt.setText(timer);
                 }
             }
 
-            if(hour==20&&min>=0&&min<1)
+            if(hour==11&&min>=0&&min<1)
             {
                 quizBtn.setVisibility(View.VISIBLE);
             }
-            /*else
-                quizBtn.setVisibility(View.INVISIBLE);*/
+            else
+                quizBtn.setVisibility(View.INVISIBLE);
             quizHandler.postDelayed(this,0);
         }
     };

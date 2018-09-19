@@ -67,7 +67,7 @@ public class SignupActivity extends AppCompatActivity {
             mProgress.setCancelable(false);
             mProgress.show();
 
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -81,7 +81,7 @@ public class SignupActivity extends AppCompatActivity {
 
                         mProgress.dismiss();
 
-                        Intent setupIntent = new Intent(SignupActivity.this,MainActivity.class);
+                        Intent setupIntent = new Intent(SignupActivity.this,SetupActivity.class);
                         setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(setupIntent);
                     }else{

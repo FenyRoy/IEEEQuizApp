@@ -48,14 +48,7 @@ public class SetupActivity extends AppCompatActivity {
 
         mProgress = new ProgressDialog(this);
 
-        mSubmitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startSetupAccout();
-
-            }
-        });
+        startSetupAccout();
 
 
     }
@@ -64,29 +57,43 @@ public class SetupActivity extends AppCompatActivity {
 
         mProgress.setMessage("Uploading....");
         mProgress.setCancelable(false);
-        mProgress.show();
-        final String name= mNameField.getText().toString().trim();
-        final String guildNum = mGuildNumFied.getText().toString();
 
-        final String user_id = mAuth.getCurrentUser().getUid();
 
-        if(!TextUtils.isEmpty(name) &&!TextUtils.isEmpty(guildNum) ){
 
-            mDatabaseUsers.child(user_id).child("name").setValue(name);
-            mDatabaseUsers.child(user_id).child("guild").setValue(guildNum);
-            mDatabaseUsers.child(user_id).child("score").setValue("0");
-            mDatabaseUsers.child(user_id).child("time").setValue("0");
-            mProgress.dismiss();
-            Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
-            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(mainIntent);
 
-        }
-        else
-        {
-            Toast.makeText(getApplicationContext(),"Fields Empty",Toast.LENGTH_LONG).show();
-            mProgress.dismiss();
-        }
+
+        mSubmitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final String name= mNameField.getText().toString().trim();
+                final String guildNum = mGuildNumFied.getText().toString();
+
+                mProgress.show();
+                final String user_id = mAuth.getCurrentUser().getUid();
+
+                if(TextUtils.isEmpty(name) || TextUtils.isEmpty(guildNum) ){
+
+                    Toast.makeText(getApplicationContext(),"Fields Empty",Toast.LENGTH_LONG).show();
+                    mProgress.dismiss();
+
+                }
+                else
+                {
+                    mDatabaseUsers.child(user_id).child("name").setValue(name);
+                    mDatabaseUsers.child(user_id).child("guild").setValue(guildNum);
+                    mDatabaseUsers.child(user_id).child("score").setValue("0");
+                    mDatabaseUsers.child(user_id).child("time").setValue("0");
+                    mProgress.dismiss();
+                    Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(mainIntent);
+                }
+
+            }
+        });
+
+
 
     }
 

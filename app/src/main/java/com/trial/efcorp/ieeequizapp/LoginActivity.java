@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
             mProgress.setMessage("Loging In...");
             mProgress.setCancelable(false);
             mProgress.show();
-            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
